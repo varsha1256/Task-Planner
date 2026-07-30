@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Flow | Time Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <main class="app-shell">
+
+        <section class="hero">
+            <p class="eyebrow">Personal Planner</p>
+            <h1>Plan your day with focus and clarity.</h1>
+            <p class="subtext">Track DevOps study sessions, projects, and habits — mark them pending, in progress, or done.</p>
+        </section>
+
+        <!-- Add task form -->
+        <section class="panel">
+            <h2>Add a task</h2>
+            <form id="taskForm" class="task-form">
+                <div class="field-row">
+                    <label for="task_name">Task name</label>
+                    <input id="task_name" name="task_name" type="text" placeholder="Example: Azure DevOps core services" required />
+                </div>
+                <div class="field-row">
+                    <label for="details">Details</label>
+                    <textarea id="details" name="details" rows="3" placeholder="What exactly are you learning?" required></textarea>
+                </div>
+                <div class="field-row date-row">
+                    <div>
+                        <label for="start_date">From date</label>
+                        <input id="start_date" name="start_date" type="date" required />
+                    </div>
+                    <div>
+                        <label for="end_date">To date</label>
+                        <input id="end_date" name="end_date" type="date" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Save task</button>
+            </form>
+            <p id="formError" class="form-error" role="alert" aria-live="polite"></p>
+        </section>
+
+        <!-- Task list with filter tabs -->
+        <section class="panel tasks-panel">
+            <div class="tasks-header">
+                <h2>Tasks</h2>
+                <p id="taskCounter">0 tasks</p>
+            </div>
+
+            <div class="filter-tabs" role="tablist">
+                <button class="filter-tab active" data-filter="all"         role="tab">All</button>
+                <button class="filter-tab"        data-filter="pending"     role="tab">Pending</button>
+                <button class="filter-tab"        data-filter="in_progress" role="tab">In Progress</button>
+                <button class="filter-tab"        data-filter="done"        role="tab">Done</button>
+            </div>
+
+            <ul id="taskList" class="task-list"></ul>
+        </section>
+
+    </main>
+
+    <!-- Task card template -->
+    <template id="taskTemplate">
+        <li class="task-item">
+            <article class="task-content">
+
+                <div class="task-top">
+                    <h3 class="task-title"></h3>
+                    <span class="status-badge"></span>
+                </div>
+
+                <p class="task-note"></p>
+
+                <!-- Inline edit fields (hidden until Edit is clicked) -->
+                <div class="edit-fields" hidden>
+                    <textarea class="edit-note" rows="2" placeholder="Update note"></textarea>
+                </div>
+
+                <p class="task-meta"></p>
+
+                <aside class="task-days">
+                    <span class="task-days-label">Days left</span>
+                    <span class="task-days-value"></span>
+                </aside>
+
+                <div class="task-actions">
+                    <button class="btn-status btn-pending" type="button" title="Pending">
+                        <span class="btn-emoji">🟡</span>
+                        <span class="btn-label">Pending</span>
+                    </button>
+                    <button class="btn-status btn-inprogress" type="button" title="In Progress">
+                        <span class="btn-emoji">🔵</span>
+                        <span class="btn-label">In Progress</span>
+                    </button>
+                    <button class="btn-status btn-done" type="button" title="Done">
+                        <span class="btn-emoji">✅</span>
+                        <span class="btn-label">Done</span>
+                    </button>
+                    <span class="action-divider"></span>
+                    <button class="btn-edit" type="button" title="Edit">
+                        <span class="btn-emoji">✏️</span>
+                        <span class="btn-label">Edit</span>
+                    </button>
+                    <button class="btn-delete" type="button" title="Delete">
+                        <span class="btn-emoji">🗑️</span>
+                        <span class="btn-label">Delete</span>
+                    </button>
+                </div>
+
+            </article>
+        </li>
+    </template>
+
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>
